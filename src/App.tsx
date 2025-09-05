@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
+import { SupabaseTest } from './components/SupabaseTest';
 import { ScraperForm } from './components/ScraperForm';
 import { ScrapedDataTable } from './components/ScrapedDataTable';
 import { JsonPanel } from './components/JsonPanel';
@@ -60,6 +61,8 @@ function App() {
         {error && (
           <ErrorMessage message={error} onDismiss={handleDismissError} />
         )}
+
+        <SupabaseTest />
 
         <ScraperForm onScrape={handleScrape} isLoading={isLoading} />
 
