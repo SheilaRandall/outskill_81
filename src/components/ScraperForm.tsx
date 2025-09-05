@@ -34,6 +34,7 @@ export function ScraperForm({ onScrape, isLoading }: ScraperFormProps) {
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="Enter website URL (e.g., https://example.com)"
+            autocomplete="url"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             disabled={isLoading}
             required

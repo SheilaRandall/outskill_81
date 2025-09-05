@@ -144,6 +144,7 @@ export function SignUpPage() {
                     onChange={(e) => handleInputChange('name', e.target.value)}
                     onBlur={() => handleBlur('name')}
                     aria-invalid={touched.name && errors.name ? 'true' : 'false'}
+                    autocomplete="given-name"
                     className={`block w-full pl-10 pr-3 py-2 border rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                       touched.name && errors.name ? 'border-red-300' : 'border-gray-300'
                     }`}
@@ -171,6 +172,7 @@ export function SignUpPage() {
                     onChange={(e) => handleInputChange('surname', e.target.value)}
                     onBlur={() => handleBlur('surname')}
                     aria-invalid={touched.surname && errors.surname ? 'true' : 'false'}
+                    autocomplete="family-name"
                     className={`block w-full pl-10 pr-3 py-2 border rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                       touched.surname && errors.surname ? 'border-red-300' : 'border-gray-300'
                     }`}
@@ -199,6 +201,7 @@ export function SignUpPage() {
                   onChange={(e) => handleInputChange('email', e.target.value)}
                   onBlur={() => handleBlur('email')}
                   aria-invalid={touched.email && errors.email ? 'true' : 'false'}
+                  autocomplete="email"
                   className={`block w-full pl-10 pr-3 py-2 border rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     touched.email && errors.email ? 'border-red-300' : 'border-gray-300'
                   }`}
@@ -226,6 +229,7 @@ export function SignUpPage() {
                   onChange={(e) => handleInputChange('password', e.target.value)}
                   onBlur={() => handleBlur('password')}
                   aria-invalid={touched.password && errors.password ? 'true' : 'false'}
+                  autocomplete="new-password"
                   className={`block w-full pl-10 pr-3 py-2 border rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     touched.password && errors.password ? 'border-red-300' : 'border-gray-300'
                   }`}
@@ -253,6 +257,7 @@ export function SignUpPage() {
                   onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
                   onBlur={() => handleBlur('confirmPassword')}
                   aria-invalid={touched.confirmPassword && errors.confirmPassword ? 'true' : 'false'}
+                  autocomplete="new-password"
                   className={`block w-full pl-10 pr-3 py-2 border rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                     touched.confirmPassword && errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
                   }`}
