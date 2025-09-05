@@ -62,8 +62,6 @@ function App() {
           <ErrorMessage message={error} onDismiss={handleDismissError} />
         )}
 
-        <SupabaseTest />
-
         <ScraperForm onScrape={handleScrape} isLoading={isLoading} />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
