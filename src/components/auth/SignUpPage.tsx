@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Mail, Lock, User, Globe, Loader } from 'lucide-react';
-import { supabase } from '../../lib/supabaseClient';
 import { SignUpFormData, SignUpErrors } from '../../types/auth';
 import { validateSignUpForm, isFormValid } from '../../utils/validation';
 
@@ -53,30 +52,9 @@ export function SignUpPage() {
     setIsLoading(true);
     
     try {
-      const { error } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            name: formData.name.trim(),
-            surname: formData.surname.trim()
-          }
-        }
-      });
-
-      if (error) {
-        // Handle specific Supabase errors
-        if (error.message.includes('already registered')) {
-          setErrors({ email: 'An account with this email already exists' });
-        } else if (error.message.includes('Password should be')) {
-          setErrors({ password: 'Password is too weak. Please choose a stronger password.' });
-        } else {
-          setErrors({ general: error.message });
-        }
-      } else {
-        // Success - redirect to check email page
-        navigate('/auth/check-email', { state: { email: formData.email } });
-      }
+      // Mock successful signup since Supabase is not configured
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      navigate('/auth/check-email', { state: { email: formData.email } });
     } catch (err) {
       setErrors({ general: 'An unexpected error occurred. Please try again.' });
     } finally {

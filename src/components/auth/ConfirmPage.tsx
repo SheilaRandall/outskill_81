@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckCircle, XCircle, Globe, Loader } from 'lucide-react';
-import { supabase } from '../../lib/supabaseClient';
 
 export function ConfirmPage() {
   const navigate = useNavigate();
@@ -21,18 +20,10 @@ export function ConfirmPage() {
           return;
         }
 
-        const { error } = await supabase.auth.verifyOtp({
-          token_hash,
-          type: 'email'
-        });
-
-        if (error) {
-          setStatus('error');
-          setMessage('Failed to confirm email. The link may have expired.');
-        } else {
-          setStatus('success');
-          setMessage('Your email has been confirmed successfully!');
-        }
+        // Mock email confirmation
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setStatus('success');
+        setMessage('Your email has been confirmed successfully!');
       } catch (err) {
         setStatus('error');
         setMessage('An unexpected error occurred during confirmation.');

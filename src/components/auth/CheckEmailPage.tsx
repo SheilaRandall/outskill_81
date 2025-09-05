@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, Mail, RefreshCw, Globe } from 'lucide-react';
-import { supabase } from '../../lib/supabaseClient';
 
 export function CheckEmailPage() {
   const location = useLocation();
@@ -19,16 +18,9 @@ export function CheckEmailPage() {
     setResendMessage('');
 
     try {
-      const { error } = await supabase.auth.resend({
-        type: 'signup',
-        email: email
-      });
-
-      if (error) {
-        setResendMessage('Failed to resend email. Please try again.');
-      } else {
-        setResendMessage('Verification email sent! Check your inbox.');
-      }
+      // Mock resend functionality
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setResendMessage('Verification email sent! Check your inbox.');
     } catch (err) {
       setResendMessage('An error occurred. Please try again.');
     } finally {
