@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navigation } from './components/Navigation';
-import { SupabaseTest } from './components/SupabaseTest';
 import { ScraperForm } from './components/ScraperForm';
 import { ScrapedDataTable } from './components/ScrapedDataTable';
 import { JsonPanel } from './components/JsonPanel';
@@ -11,6 +10,7 @@ import { CheckEmailPage } from './components/auth/CheckEmailPage';
 import { ConfirmPage } from './components/auth/ConfirmPage';
 import { ErrorMessage } from './components/ErrorMessage';
 import { ScrapedData } from './types/scraper';
+import { useRecentResults } from './hooks/useRecentResults';
 import { scrapeWebsite, mockScrapedData } from './utils/scraper';
 
 function App() {
@@ -18,6 +18,9 @@ function App() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Fetch recent results from Supabase
+  const { data: recentResults, loading: resultsLoading, error: resultsError, refetch } = useRecentResults(20);
 
   const handleScrape = async (url: string) => {
     setIsLoading(true);
@@ -27,6 +30,7 @@ function App() {
       const newData = await scrapeWebsite(url);
       setScrapedData(prev => [newData, ...prev]);
       setSelectedId(newData.id);
+      refetch(); // Refresh the results from Supabase
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to scrape website');
     } finally {
@@ -38,7 +42,9 @@ function App() {
     setSelectedId(selectedId === id ? null : id);
   };
 
-  const selectedData = scrapedData.find(item => item.id === selectedId) || null;
+  // Combine local scraped data with recent results from Supabase
+  const allData = [...scrapedData, ...recentResults];
+  const selectedData = allData.find(item => item.id === selectedId) || null;
 
   const handleDismissError = () => {
     setError(null);
@@ -67,9 +73,11 @@ function App() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             <ScrapedDataTable
-              data={scrapedData}
+              data={allData}
               selectedId={selectedId}
               onSelectRow={handleSelectRow}
+              loading={resultsLoading}
+              error={resultsError}
             />
           </div>
           

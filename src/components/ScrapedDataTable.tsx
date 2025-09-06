@@ -1,18 +1,42 @@
 import React from 'react';
-import { ExternalLink, Calendar, Hash, Link } from 'lucide-react';
+import { ExternalLink, Calendar, Hash, Link, Globe, Loader, AlertCircle } from 'lucide-react';
 import { ScrapedData } from '../types/scraper';
 
 interface ScrapedDataTableProps {
   data: ScrapedData[];
   selectedId: string | null;
   onSelectRow: (id: string) => void;
+  loading?: boolean;
+  error?: string | null;
 }
 
-export function ScrapedDataTable({ data, selectedId, onSelectRow }: ScrapedDataTableProps) {
+export function ScrapedDataTable({ data, selectedId, onSelectRow, loading = false, error = null }: ScrapedDataTableProps) {
   const formatDate = (isoString: string) => {
     return new Date(isoString).toLocaleString();
   };
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
+        <Loader className="h-12 w-12 text-blue-600 mx-auto mb-4 animate-spin" />
+        <p className="text-gray-500">Loading scraped data...</p>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="bg-white rounded-lg border border-red-200 p-8 text-center">
+        <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+        <p className="text-red-600 font-medium mb-2">Failed to load data</p>
+        <p className="text-gray-500 text-sm">{error}</p>
+      </div>
+    );
+  }
+
+  // Empty state
   if (data.length === 0) {
     return (
       <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
