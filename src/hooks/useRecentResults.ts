@@ -15,15 +15,16 @@ export function useRecentResults(limit: number = 20): UseRecentResultsReturn {
   const [error, setError] = useState<string | null>(null);
 
   const fetchResults = async () => {
-    if (!supabase) {
-      setError('Supabase client not configured');
-      setLoading(false);
-      return;
-    }
-
     try {
       setLoading(true);
       setError(null);
+
+      // If Supabase is not configured, return empty results
+      if (!supabase) {
+        setData([]);
+        setLoading(false);
+        return;
+      }
 
       const { data: results, error: fetchError } = await supabase
         .from('scrape_results')
@@ -56,8 +57,10 @@ export function useRecentResults(limit: number = 20): UseRecentResultsReturn {
 
       setData(transformedData);
     } catch (err) {
-      console.error('Error fetching recent results:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch results');
+      // Silently handle Supabase connection errors and return empty results
+      console.warn('Supabase not available, using local data only');
+      setData([]);
+      setError(null);
     } finally {
       setLoading(false);
     }
